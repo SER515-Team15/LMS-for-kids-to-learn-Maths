@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+<title>Register-Page</title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/registration.css') }}">
+<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Play">
+<link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<div class="signUp">
+		<form action = "POST", action = "/">
+			<h2 style="color: white">Register</h2>
+
+			<label for="fName"></label>
+			<input type="text" name="fName" placeholder="First Name" required>
+			
+			<label for="lName"></label>
+			<input type="text" name="lName" placeholder="Last Name" required>
+
+			<label for="pass"></label>
+			<input type="password" name="pass" placeholder="Password" required>
+
+			<label for="confirmPass"></label>
+			<input type="password" name="confirmPass" placeholder="Confirm Password" required>
+
+			<label for="email"></label>
+			<input type="text" name="email" placeholder="Email Address" required>
+
+			<br><br>
+			<a href=""><input type="button" value="Register"></a><br><br>
+
+			Already have an account? <a href="#"> &nbsp; Sign In</a>
+		</form>
+	</div>
+</body>
+</html> 
