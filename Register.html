@@ -2,30 +2,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
 <title>Register-Page</title>
-<link href="login-registration.css" rel="stylesheet" type="text/css"/>
+<link rel= "stylesheet" type= "text/css" href= "login-registration.css">
 <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Play">
 <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
 </head>
 <body>
 
 	<div class="signUp">
-		<form>
+		<form action = "POST", action = "/" onsubmit="return Validate()" name="vform">
 			<h2 style="color: white">Register</h2>
 
 			<label for="fName"></label>
 			<input type="text" name="fName" placeholder="First Name" required>
+			<div id= "fname_error" class="val_error"></div>
 			
 			<label for="lName"></label>
 			<input type="text" name="lName" placeholder="Last Name" required>
-
+			<div id= "lname_error" class="val_error"></div>
+			
 			<label for="pass"></label>
 			<input type="password" name="pass" placeholder="Password" required>
+			
 
 			<label for="confirmPass"></label>
 			<input type="password" name="confirmPass" placeholder="Confirm Password" required>
+			<div id= "confirmPass_error" class="val_error"></div>
 
 			<label for="email"></label>
 			<input type="text" name="email" placeholder="Email Address" required>
+			<div id= "email_error" class="val_error"></div>		
+
 
 			<br><br>
 			<a href=""><input type="button" value="Register"></a><br><br>
@@ -35,3 +41,76 @@
 	</div>
 </body>
 </html> 
+
+<script type="text/javascript">
+	var fname = document.forms['vform']['fname'];
+	var lname=document.forms['vform']['lname'];
+	var password=document.forms['vform']['pass_error'];
+	var password_confirmation=document.forms['vform']['confirmPass_error'];
+	var email_error=document.forms['vform']['email_error']
+
+	var fname_error= document.getElementById("fname_error");
+	var lname_error= document.getElementById("lname_error");
+	var password_error= document.getElementById("confirmPass_error");
+	var email_error= document.getElementById("email_error");
+
+	fname.addEventListener("blur",nameverify, true);
+	lname.addEventListener("blur",nameverify, true);
+	password_error.addEventListener("blur",nameverify, true);
+	email_error.addEventListener("blur",nameverify, true);
+
+	function Validate(){
+		//valdiate first name
+		 if (fname.value == "") {
+			    fname.style.border = "1px solid red";
+			    document.getElementById('username_div').style.color = "red";
+			    fname.textContent = "Username is required";
+			    fname.focus();
+			    return false;
+  }
+   		if (fname.value.length < 3) {
+		    fname.style.border = "1px solid red";
+		    document.getElementById('username_div').style.color = "red";
+		    fname.textContent = "Username must be at least 3 characters";
+		    fname.focus();
+		    return false;
+  }
+       //Validate last Name
+
+
+  		if (lname.value == "") {
+			    lname.style.border = "1px solid red";
+			    document.getElementById('username_div').style.color = "red";
+			    lname.textContent = "Username is required";
+			    lname.focus();
+			    return false;
+  }
+   		if (lname.value.length < 3) {
+		    lname.style.border = "1px solid red";
+		    document.getElementById('username_div').style.color = "red";
+		    lname.textContent = "Username must be at least 3 characters";
+		    lname.focus();
+		    return false;
+  }
+
+  		//Validate Password
+
+
+  		  if (password.value == "") {
+   			 password.style.border = "1px solid red";
+    		 document.getElementById('password_div').style.color = "red";
+    		 password_confirm.style.border = "1px solid red";
+    		 password_error.textContent = "Password is required";
+    		 password.focus();
+    		 return false;
+  }
+
+
+
+
+
+	}
+
+
+
+</script>
