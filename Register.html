@@ -12,25 +12,35 @@
 		<form action = "POST", action = "/" onsubmit="return Validate()" name="vform">
 			<h2 style="color: white">Register</h2>
 
+
+			<div id="fname_div">
 			<label for="fName"></label>
 			<input type="text" name="fName" placeholder="First Name" required>
-			<div id= "fname_error" class="val_error"></div>
+			<div id= "fname_error" class="val_error"></div></div>
 			
+
+			<div id="lname_div">
 			<label for="lName"></label>
 			<input type="text" name="lName" placeholder="Last Name" required>
-			<div id= "lname_error" class="val_error"></div>
-			
-			<label for="pass"></label>
-			<input type="password" name="pass" placeholder="Password" required>
+			<div id= "lname_error" class="val_error"></div></div>
 			
 
+
+
+			<div id="password_div">
+			<label for="pass"></label>
+			<input type="password" name="pass" placeholder="Password" required></div>
+			
+			<div id="confirmPass_div">
 			<label for="confirmPass"></label>
 			<input type="password" name="confirmPass" placeholder="Confirm Password" required>
-			<div id= "confirmPass_error" class="val_error"></div>
+			<div id= "confirmPass_error" class="val_error"></div></div>
 
+
+			<div id="email_div">
 			<label for="email"></label>
 			<input type="text" name="email" placeholder="Email Address" required>
-			<div id= "email_error" class="val_error"></div>		
+			<div id= "email_error" class="val_error"></div>	</div>	
 
 
 			<br><br>
@@ -43,21 +53,21 @@
 </html> 
 
 <script type="text/javascript">
-	var fname = document.forms['vform']['fname'];
-	var lname=document.forms['vform']['lname'];
-	var password=document.forms['vform']['pass_error'];
-	var password_confirmation=document.forms['vform']['confirmPass_error'];
-	var email_error=document.forms['vform']['email_error']
+	var fname = document.forms['vform']['fName'];
+	var lname=document.forms['vform']['lName'];
+	var password=document.forms['vform']['pass'];
+	var password_confirmation=document.forms['vform']['confirmPass'];
+	var email_error=document.forms['vform']['email']
 
 	var fname_error= document.getElementById("fname_error");
 	var lname_error= document.getElementById("lname_error");
 	var password_error= document.getElementById("confirmPass_error");
 	var email_error= document.getElementById("email_error");
 
-	fname.addEventListener("blur",nameverify, true);
-	lname.addEventListener("blur",nameverify, true);
-	password_error.addEventListener("blur",nameverify, true);
-	email_error.addEventListener("blur",nameverify, true);
+	fname.addEventListener("blur",FnameVerify, true);
+	//lname.addEventListener("blur",nameverify, true);
+	//password_error.addEventListener("blur",nameverify, true);
+	//email_error.addEventListener("blur",nameverify, true);
 
 	function Validate(){
 		//valdiate first name
@@ -104,6 +114,17 @@
     		 password.focus();
     		 return false;
   }
+
+  function FnameVerify() {
+		  if (fname.value != "") {
+		   fname.style.border = "1px solid #5e6e66";
+		   document.getElementById('fname_div').style.color = "#5e6e66";
+		   fname_error.innerHTML = "";
+		   return true;
+		  }
+		}
+
+ 
 
 
 
