@@ -3110,7 +3110,7 @@
 /* Footer */
 
 	#footer {
-		padding: 6em 0;
+		padding: 1em 0;
 		background: #f8f9fa !important;
 		color: #212529;
 		text-align: center;
@@ -3118,7 +3118,7 @@
 
 		#footer h3 {
 			color:#212529;
-			margin-bottom: 2em !important;
+			margin-bottom: 1em !important;
 		}
 
 		#footer label {
