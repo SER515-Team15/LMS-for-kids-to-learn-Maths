@@ -1,5 +1,11 @@
-{% extends "layout.html" %}
-{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Layout </title>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+	<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Play">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet"></head>
+	<body>
 
 	<div class="signUp">
 		<form method = "POST", action = "/register">
@@ -27,4 +33,5 @@
 		</form>
 	</div>
 
-{% endblock %}
+</body>
+</html>
