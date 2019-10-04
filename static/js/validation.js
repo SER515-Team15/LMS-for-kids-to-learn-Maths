@@ -1,8 +1,8 @@
-	var fname=document.getElementById("fName");
-	var lname=document.getElementById("lName");
+	var fname=document.getElementById("fname");
+	var lname=document.getElementById("lname");
 	var pass=document.getElementById("pass");
-	var cPass=document.getElementById("confirmPass");
-	var confirmPass=document.getElementById("confirmPass");
+	var cPass=document.getElementById("confirmpass");
+	var confirmPass=document.getElementById("confirmpass");
 	var email=document.getElementById("email");
 
 
