@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Register </title>
+	<link rel= "stylesheet" type= "text/css" href= "static/css/style.css">
+	<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Play">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
+</head>
+	<body bgcolor="red">
+	
+		<div class="signUp">
+			<form method = "POST", action = "/register">
+				<h2 style="color: white">Register</h2>
+
+				<label for="fName"></label>
+				<input type="text" name="fName" placeholder="First Name" required>
+				
+				<label for="lName"></label>
+				<input type="text" name="lName" placeholder="Last Name" required>
+
+				<label for="pass"></label>
+				<input type="password" name="pass" placeholder="Password" required>
+
+				<label for="confirmPass"></label>
+				<input type="password" name="confirmPass" placeholder="Confirm Password" required>
+
+				<label for="email"></label>
+				<input type="text" name="email" placeholder="Email Address" required>
+
+				<br><br>
+				<a href=""><input type="submit" value="Register"></a><br><br>
+
+				Already have an account? <a href="/login"> &nbsp; Sign In</a>
+			</form>
+		</div>
+	</body>
+
+<!-- <script src = "static/js/validation.js"></script> -->
+<script>
+	var fname=document.getElementById("fName");
+	var lname=document.getElementById("lName");
+	var pass=document.getElementById("pass");
+	var cPass=document.getElementById("confirmPass");
+	var confirmPass=document.getElementById("confirmPass");
+	var email=document.getElementById("email");
+
+
+
+	var button=document.getElementById("button");
+	button.addEventListener("click", function(evt){
+
+		 if (fname.value == "") {
+			    evt.preventDefault();
+		 		var change=document.getElementById('fname'); 
+			    change.style.border = "1px solid red";
+			    change.placeholder = "First Name is required"
+			    return;
+  		}	
+
+		if (lname.value == "") {
+			    evt.preventDefault();
+		 		var change=document.getElementById('lname'); 
+			    change.style.border = "1px solid red";
+			    change.placeholder = "Last Name is required"
+			    return;
+  		}
+
+		if (pass.value == "") {
+			    evt.preventDefault();
+		 		var change=document.getElementById('Passwords'); 
+			    change.style.border = "1px solid red";
+			    change.style.color = "red";
+			    change.placeholder = "Password is required"
+			    return;
+  		}  			
+
+		else if (pass.value.length < 8) {
+		    evt.preventDefault();
+	 		var change=document.getElementById('pass'); 
+		    change.style.border = "1px solid red";
+		    change.style.color = "red";
+			alert('Password Length should be >=8')
+			return ;
+		}  			
+
+
+		if (confirmPass.value !== pass.value) {
+		    evt.preventDefault();
+	 		var change=document.getElementById('confirmpass'); 
+		    change.style.border = "1px solid red";
+		    change.style.color = "red";
+			alert('Password and Confirm Password do not match')
+			return;
+		}  			
+
+		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var ans=re.test(email.value);
+
+		if (!ans) {
+				evt.preventDefault();
+				var change=document.getElementById('email'); 
+			    change.style.border = "1px solid red";
+			    change.style.color = "red";
+			    alert('Enter valid email address')
+			    return;
+  		}	
+
+
+
+	});
+
+</script>
+
+</html>
