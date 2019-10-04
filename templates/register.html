@@ -6,42 +6,47 @@
 	<link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Play">
 	<link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
 </head>
-	<body bgcolor="red">
+	<body>
 	
 		<div class="signUp">
-			<form method = "POST", action = "/register">
-				<h2 style="color: white">Register</h2>
+		<form>
+			<h2 style="color: white">Register</h2>
 
-				<label for="fName"></label>
-				<input type="text" name="fName" placeholder="First Name" required>
-				
-				<label for="lName"></label>
-				<input type="text" name="lName" placeholder="Last Name" required>
 
-				<label for="pass"></label>
-				<input type="password" name="pass" placeholder="Password" required>
+			<div id="fname_div">
+			<input id="fname" type="text" name="fName" placeholder="First Name"></div>
+			
 
-				<label for="confirmPass"></label>
-				<input type="password" name="confirmPass" placeholder="Confirm Password" required>
+			<div id="lname_div">
+			<input id="lname" type="text" name="lName" placeholder="Last Name"></div>
 
-				<label for="email"></label>
-				<input type="text" name="email" placeholder="Email Address" required>
+			<div id="password_div">
+			<input id="pass" type="password" name="pass" placeholder="Password"></div>
+			
+			<div id="confirmPass_div">
+			<input id="confirmpass" type="password" name="confirmPass" placeholder="Confirm Password"></div>
 
-				<br><br>
-				<a href=""><input type="submit" value="Register"></a><br><br>
 
-				Already have an account? <a href="/login"> &nbsp; Sign In</a>
-			</form>
-		</div>
+			<div id="email_div">
+			<input id="email" type="text" name="email" placeholder="Email Address"></div>
+
+			<br>
+			<input id="button" type="submit">
+
+			<br>
+
+			Already have an account? <a href="/login"> &nbsp; Sign In</a>
+		</form>
+	</div>
 	</body>
 
 <!-- <script src = "static/js/validation.js"></script> -->
 <script>
-	var fname=document.getElementById("fName");
-	var lname=document.getElementById("lName");
+	var fname=document.getElementById("fname");
+	var lname=document.getElementById("lname");
 	var pass=document.getElementById("pass");
-	var cPass=document.getElementById("confirmPass");
-	var confirmPass=document.getElementById("confirmPass");
+	var cPass=document.getElementById("confirmpass");
+	var confirmPass=document.getElementById("confirmpass");
 	var email=document.getElementById("email");
 
 
