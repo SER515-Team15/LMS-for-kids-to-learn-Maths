@@ -118,10 +118,9 @@
                 </div>
             </div>
 
-            <div class="form-group after-add-more form-inline">
-              <input type="text" name="addmore[]" class="form-control" placeholder="Enter text here" style="width:1200px" required>
-                <div class="form-group-btn"> 
-                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+            <div class="form-group after-add-more1">
+                 <div class="form-group-btn"> 
+                  <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Question +</button>
                 </div>
             </div>
               
@@ -144,6 +143,14 @@
         <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
         <div class="form-group-btn"> 
           <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+      </div>
+    </div>
+    <div class="copy1" style="display:none">
+      <div class="form-group form-inline">
+        <input type="text" name="addmore[]1" class="form-control" placeholder="Enter text here" style="width:1200px">
+        <div class="form-group-btn"> 
+          <button class="btn btn-danger remove1" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
         </div>
       </div>
     </div>
@@ -227,6 +234,15 @@
           $(this).parents(".form-group").remove();
       });
 
+      $(".add-more1").click(function(){ 
+          var html = $(".copy1").html();
+          $(".after-add-more1").after(html);
+      });
+
+
+      $("body").on("click",".remove1",function(){ 
+          $(this).parents(".form-group").remove();
+      });
 
     });
 
