@@ -1,6 +1,41 @@
 import React, { Component } from 'react';
 
 
+
+
+
+
+//Adding button
+
+render() {
+    return (
+      <div className="App">
+        <div className="container">
+          <button type="button" class="button">
+            ☰
+          </button>
+        </div>
+      </div>
+    );
+  }
+.container {
+  position: relative;
+  display: inline-block;
+}
+.button {
+  padding: 0;
+  width: 50px;
+  border: 0;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  outline: 0;
+  font-size: 40px;
+}
+
+
+
+
 //Styling
 
 const divStyle = {
