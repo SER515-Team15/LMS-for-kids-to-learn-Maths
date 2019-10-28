@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="/static/css/main.css">
+      <title> Register </title>
+   </head>
+
+   <body>
+     <div class="container">
+       <div class="row">
+         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+           <div class="card card-signin my-5">
+             <div class="card-body">
+               <h5 class="card-title text-center">Register</h5>
+               
+               <form class="form-signin">
+
+                <div class="form-label-group">
+                   <input type="text" id="name" name = "name" class="form-control" placeholder="Name" required autofocus>
+                   <label for="name">Name</label>
+                 </div>
+
+                 <div class="form-label-group">
+                   <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+                   <label for="email">Email address</label>
+                 </div>
+
+                 <div class="form-label-group">
+                   <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                   <label for="password">Password</label>
+                 </div>
+
+                 <div class="form-label-group">
+                   <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+                   <label for="confirmPassword"> Confirm Password</label>
+                 </div>
+
+                <br>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <select class="selectpicker form-control">
+                      <option disabled selected> What are you? Select your role!
+                      <option>Student</option>
+                      <option>Teacher</option>
+                      <option>Admin</option>
+                    </select>
+                  </div>
+                </div>
+                <br>
+                  
+                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+                 <hr class="my-4">
+               </form>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </body>
+
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+</html>
