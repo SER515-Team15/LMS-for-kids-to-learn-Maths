@@ -12,7 +12,7 @@ db = scoped_session(sessionmaker(bind = _engine))
 @app.route("/")
 @app.route("/home")
 def home():
-	return render_template('home.html')
+	return render_template('teacher_landing.html')
 
 @app.route("/register", methods = ["GET","POST"])
 def register():
@@ -38,6 +38,7 @@ def register():
 			# return render_template('register.html')
 	
 	return render_template("register.html")
+
 
 @app.route("/login", methods = ["GET","POST"])
 def login():
@@ -73,6 +74,37 @@ def logout():
 	session.clear()
 	flash("You have successfully logged out!", "success")
 	return redirect(url_for("home"))
+
+
+
+@app.route("/playground")
+def playground():
+	
+	return render_template('playground.html')
+
+
+@app.route("/takeQuiz")
+def takeQuiz():
+	
+	return render_template('takeQuiz.html')
+
+
+@app.route("/reviewGrades")
+def reviewGrades():
+	
+	return render_template('reviewGrades.html')
+
+
+@app.route("/createQuiz")
+def createQuiz():
+	
+	return render_template('createQuiz.html')
+
+
+@app.route("/gradeQuiz")
+def gradeQuiz():
+	return render_template('gradeQuiz.html')
+
 
 if __name__ == '__main__':
 	app.secret_key = '123456789abcdefgh'
