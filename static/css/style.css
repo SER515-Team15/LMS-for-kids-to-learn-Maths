@@ -1,7 +1,7 @@
 body{
 	font-family:'Amatic SC', cursive;
 	color: #fff;
-	background: url(art-background-bright-1594927.jpg) no-repeat center center fixed;
+	background: url(static/art-background-bright-1594927.jpg);
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
 	-o-background-size: cover;
