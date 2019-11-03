@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Interactive Learning Application</title>
+  <title>Admin</title>
 
   <!-- Bootstrap core CSS -->
   <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,10 +26,10 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-light bg-light navbar-fixed-top">
+  <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="/home">LeARn</a>
-      <a class="btn btn-primary" href="/logout">Log out</a>
+      <a class="navbar-brand" href="#">LeARn</a>
+      <a class="btn btn-primary" href="/login">Log out</a>
     </div>
   </nav>
 
@@ -38,8 +38,7 @@
     <section class="showcase">
       <div class="container-fluid p-0">
         <div class="row no-gutters">
-          <div class="col-lg-6 text-white showcase-img" style="background-image: url('static/img/bg-showcase-2.jpg');"></div>
-          <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('static/img/bg-showcase-3.jpg');"></div>
+          <div class="col-lg-12 text-white showcase-img" style="background-image: url('static/img/bg-showcase-2.jpg');"></div>
         </div>
       </div>
     </section>
@@ -49,37 +48,36 @@
   <section class="features-icons bg-light text-center">
     <div class="container">
       <div class="row">
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <a href = "/adminconsole" style = "text-decoration: none">
+                <div class="features-icons-icon d-flex">
+                  <i class="icon-user m-auto text-primary"></i>
+                </div>
+                <h3>Manage Accounts</h3>
+                <p class="lead mb-0">Add or remove member accounts.</p>
+              </a>
+              </div>
+          </div>
         <div class="col-lg-4">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <a href="{{url_for('playground')}}" style = "text-decoration: none">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-screen-desktop m-auto text-primary"></i>
-            </div>
-            
-            <h3>Go To the Playground</h3>
-            <p class="lead mb-0">Playground is the place where students can practice and learn new things while having fun!</p>
+            <a href = "#" style = "text-decoration: none">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-list m-auto text-primary"></i>
+              </div>
+              <h3>Reports</h3>
+              <p class="lead mb-0">Check recent comments or reports by users.</p>
             </a>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <a href="#" style = "text-decoration: none">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-layers m-auto text-primary"></i>
             </div>
-            <h3>Take a Quiz</h3>
-            <p class="lead mb-0">Take a quiz from a range of quizzes set up by lecturers</p>
-          </a>
-          </div>
         </div>
         <div class="col-lg-4">
           <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <a href="#" style = "text-decoration: none">
+            <a href = "#" style = "text-decoration: none">
             <div class="features-icons-icon d-flex">
-              <i class="icon-check m-auto text-primary"></i>
+              <i class="icon-settings m-auto text-primary"></i>
             </div>
-            <h3>Review your Grades</h3>
-            <p class="lead mb-0">Check your progress so far.</p>
+            <h3>Maintainance mode</h3>
+            <p class="lead mb-0">Put the site in Maintainance mode.</p>
           </a>
           </div>
         </div>
@@ -88,7 +86,7 @@
   </section>
 
   <!-- Call to Action -->
-  <section class="call-to-action text-white text-center">
+  <!--<section class="call-to-action text-white text-center">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -100,13 +98,13 @@
         </div>
       </div>
     </div>
-  </section>
+  </section>-->
 
   <!-- Footer -->
   <footer class="footer bg-light">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 h-100 text-center text-lg-center my-auto">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
           <ul class="list-inline mb-2">
             <li class="list-inline-item">
               <a href="#">About</a>
@@ -126,11 +124,12 @@
           </ul>
           <p class="text-muted small mb-4 mb-lg-0">&copy; Project created by SER515.</p>
         </div>
+        
       </div>
     </div>
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
+    <!-- Bootstrap core JavaScript -->
   <script src="static/vendor/jquery/jquery.min.js"></script>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
