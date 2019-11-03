@@ -1,18 +1,16 @@
+//Drop Prevent Function
 function cancel(e) {
   if (e.preventDefault) {
     e.preventDefault();
   }
   return false;
 }
-function refresh_total_costs(total_costs){
-	$('#total-costs span').text(total_costs);
-}
-
 function clickFunction(){
 	$('#output').html("");
 	$('#total-costs span').text(0);
 }
 
+//Equals Button Function
 function equalFunction(){
 	var exChildren=$("#output").children();
 	var arr=[];
@@ -47,6 +45,7 @@ var html='<div draggable="true" class="dragable-item" data-title="Box 9" data-pr
 	$('#output').append(html);
 
 }
+//Main Function
 $(document).ready(function() {
 
 		var total_costs = 0;
