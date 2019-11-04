@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--Page to create a new Quiz with question and choices fields-->
+
 <head>
 
   <meta charset="utf-8">
@@ -49,7 +51,7 @@
     </section>
   </header>-->
 
-  <!-- Icons Grid -->
+  <!-- Form with all the Question Field and choices Field -->
   <section class="features-icons bg-light text-center">
     <div class="container">
       <form action="action.php" class="was-validated"> 
@@ -65,6 +67,7 @@
             </div>
             <div class="form-group after-add-more form-inline">
               <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
+                <!--This button will add extra fields for adding more choices this code segment for both questions and choices is repeated throughout the code-->
                 <div class="form-group-btn"> 
                   <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> +</button>
                 </div>
@@ -103,7 +106,7 @@
             </div>
               
             <div class="form-group"> 
-                <p class="text-left">Question4</p> 
+                <p class="text-left">Question 4</p> 
                 <input type="text" class="form-control" id="Q4"
                     placeholder="Type text here" name="addmore[]1" required> 
                 <div class="valid-feedback">Valid</div> 
@@ -118,6 +121,7 @@
                 </div>
             </div>
 
+            <!--This button will add new fields for the Question and also create a choice field with option to add more choice fields-->
             <div class="form-group after-add-more1">
                  <div class="form-group-btn"> 
                   <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Question +</button>
@@ -134,25 +138,29 @@
                     </div> 
                 </label> 
             </div>-->
-
+            <!--submit button to send the questions and answers to the database (Under Development)-->
             <button type="submit" class="btn bg-success">Submit</button> 
         </form>
     </div>
+    <!--This is the code segment that is called to add new choices to existing questions-->
     <div class="copy" style="display:none">
       <div class="form-group form-inline">
         <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
         <div class="form-group-btn"> 
+          <!--This button will remove one choice field-->
           <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> -</button>
         </div>
       </div>
     </div>
 
+    <!--This is the code segment that will add a question as well as a new choice field-->
     <div class="copy1" style="display:none">
       <div class="form-group">
         <p class="text-left">Question#</p>
         <div class="form-inline">
         <input type="text" name="addmore[]1" class="form-control" placeholder="Enter text here" style="width:1078px" required>
         <div class="form-group-btn"> 
+          <!--This button will remove the last Question field added in the page alongwith its choices field-->
           <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> -</button>
         </div>
         <div class="valid-feedback">Valid</div> 
@@ -230,6 +238,7 @@
     </div>
   </footer>
 
+  <!--JQuery to add Question and Choice Fields and also to remove them-->
   <script type="text/javascript">
     $(document).ready(function() {
       $(".add-more").click(function(){ 
