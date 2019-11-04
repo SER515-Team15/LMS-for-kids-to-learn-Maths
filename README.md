@@ -44,7 +44,7 @@ _engine = create_engine("mysql+pymysql://root:Yourpassword@localhost/LoginRegist
 * Save the file
 
 ## 5.Runing the Applicaiton.
-* Type python main.py to start the Flask server
+* Type ```python main.py``` to start the Flask server
 * In the browser open ```http://127.0.0.1:5000/``` to see our home page. 
 
 
