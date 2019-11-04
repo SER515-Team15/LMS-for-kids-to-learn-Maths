@@ -12,8 +12,8 @@
 ## 3.Setting Up Flask and it's dependencies.
 * Open the Annaconda Prompt using the start button.
 * Navigate to the directory where the our project repository was cloned.
-* Start a conda enviroment by the following command  conda activate myenv
-* After activating enviroment install Flask using Pip using this command pip install Flask
+* Start a conda enviroment by the following command  ```conda activate myenv```
+* After activating enviroment install Flask using Pip using this command ```pip install Flask```
 * Install the database driver using this command ```pip install SQLAlchemy```
 
 
