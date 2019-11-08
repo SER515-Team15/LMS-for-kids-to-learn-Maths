@@ -3,18 +3,56 @@
 	<head>
 		<title>Admin Console</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+
 	</head>
 
 	<body>
 		{% block body %}
 
-		<!-- Navigation -->
-		  <nav class="navbar navbar-light bg-light static-top">
-		    <div class="container">
-		      <a class="navbar-brand" href="#">LeARn</a>
-		      <a class="btn btn-primary" href="/login">Log out</a>
-		    </div>
-		  </nav>
+<!-- Navigation -->
+        <!-- Grid row-->
+        <nav class="row bg-light sticky-top text-center d-flex justify-content-center mb-4">
+
+          <!-- Grid column -->
+          <div class="col-md-2 pt-3">
+            <h1 class="font-weight-bold" style = "font-family: 'Nanum Brush Script', cursive;">
+              <a href = "/adminconsole" style= "text-decoration: none;">cos(Y !=)</a>
+            </h1>
+             
+          </div>
+          <!-- Grid column -->
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- Grid column -->
+          <div class="col-md-2 pt-4">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="/admin" style= "text-decoration: none;">Home</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-2 pt-4">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="#" style= "text-decoration: none;">Reports</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-2 pt-4">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="#" style= "text-decoration: none;">Maintenance</a>
+            </h6>
+          </div>
+
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- Grid column -->
+          <div class="col-md-2 pt-2" >
+            <a class="btn btn-primary text-uppercase mt-2" style= "float:right" href="/logout">Log out</a>
+          </div>
+          
+      </nav>
 		
 		<div class = "container">
 			<div class = "well text-center">
