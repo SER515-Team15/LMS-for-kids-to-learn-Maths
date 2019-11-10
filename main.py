@@ -5,6 +5,7 @@ from sqlalchemy import text
 
 app = Flask(__name__)
 
+
 # Change the credentials to fit your localhost details.
 _engine = create_engine("mysql+pymysql://root:Sudhanva@localhost/LoginRegister")
 db = scoped_session(sessionmaker(bind = _engine))
@@ -68,17 +69,17 @@ def login():
 		if password==Password:
 			# If admin
 			if role == "Admin" and status == "1":
-				session["log"] = True
+				session["user"] = em
 				return redirect(url_for("admin"))
 
 			# If teacher
 			elif role == "Teacher" and status == "1":
-				session["log"] = True
+				session["user"] = em
 				return redirect(url_for("teacher"))
 			
 			# IF Student
 			elif "Student" in role and status == "1":
-				session["log"] = True
+				session["user"] = em
 				return redirect(url_for("student"))
 			
 			# If Neither
@@ -112,56 +113,85 @@ def delete(email):
 # Admin Route
 @app.route("/admin", methods = ["GET","POST"])
 def admin():
-	return render_template("admin.html")
+	if 'user' in session:
+		return render_template("admin.html")
+	else:
+		return render_template('login.html')
 
 # Teacher Route
 @app.route("/teacher", methods = ["GET","POST"])
 def teacher():
-	return render_template("teacher.html")
+	if 'user' in session:
+		return render_template("teacher.html")
+	else:
+		return render_template('login.html')
 
 # Student Route
 @app.route("/student", methods = ["GET","POST"])
 def student():
-	return render_template("student_landing.html")
+	if 'user' in session:
+		return render_template("student_landing.html")
+	else:
+		return render_template('login.html')
+	
 
 # Logout Route
 @app.route("/logout")
 def logout():
-	session.clear()
+	session.pop('user', None)
 	return render_template("login.html")
 
 # Playground
 @app.route("/playground")
 def playground():
-	email = session['email']
-	roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
-	role = ''.join(roles)
 
-	# If Elementary Student, else Load Middle School Playground
-	if "Elementary" in role:
-		return render_template('playground.html')
+	if 'user' in session:
+		email = session['email']
+		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
+		role = ''.join(roles)
+		# If Elementary Student, else Load Middle School Playground
+		if "Elementary" in role:
+			return render_template('playground.html')
+		else:
+			return render_template('playground_middle.html')
 	else:
-		return render_template('playground_middle.html')
+		return render_template('login.html')
 
 # Take Quiz Route
 @app.route("/takeQuiz")
 def takeQuiz():
-	return render_template('takeQuiz.html')
+	if 'user' in session:
+		return render_template('takeQuiz.html')
+	else:
+		return render_template('login.html')
+	
 
 # Review Grades Route
 @app.route("/reviewGrades")
 def reviewGrades():
-	return render_template('reviewGrades.html')
+	if 'user' in session:
+		return render_template('reviewGrades.html')
+	else:
+		return render_template('login.html')
+	
 
 # Create Quiz Route
 @app.route("/createQuiz")
 def createQuiz():
-	return render_template('createQuiz.html')
+	if 'user' in session:
+		return render_template('createQuiz.html')
+	else:
+		return render_template('login.html')
+	
 
 # Grade Quiz Route
 @app.route("/gradeQuiz")
 def gradeQuiz():
-	return render_template('gradeQuiz.html')
+	if 'user' in session:
+		return render_template('gradeQuiz.html')
+	else:
+		return render_template('login.html')
+	
 
 # Run Main in Debug mode
 if __name__ == '__main__':
