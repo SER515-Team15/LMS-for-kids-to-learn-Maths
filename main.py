@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, session, logging, url_for, redirect, flash
 from sqlalchemy import create_engine
+from flask_login import fresh_login_required
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import text
+from functools import wraps
 
 app = Flask(__name__)
-
 
 # Change the credentials to fit your localhost details.
 _engine = create_engine("mysql+pymysql://root:Sudhanva@localhost/LoginRegister")
@@ -18,6 +19,15 @@ app.config['SECRET_KEY'] = 'SER@515@Findler'
 @app.route("/home")
 def home():
 	return render_template("home.html")
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('login'))
+    return wrap
 
 # Register Page Route
 @app.route("/register", methods = ["GET","POST"])
@@ -69,17 +79,17 @@ def login():
 		if password==Password:
 			# If admin
 			if role == "Admin" and status == "1":
-				session["user"] = em
+				session['logged in'] = em
 				return redirect(url_for("admin"))
 
 			# If teacher
 			elif role == "Teacher" and status == "1":
-				session["user"] = em
+				session['logged in'] = em
 				return redirect(url_for("teacher"))
 			
 			# IF Student
 			elif "Student" in role and status == "1":
-				session["user"] = em
+				session['logged in'] = em
 				return redirect(url_for("student"))
 			
 			# If Neither
@@ -112,24 +122,27 @@ def delete(email):
 
 # Admin Route
 @app.route("/admin", methods = ["GET","POST"])
+@login_required
 def admin():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template("admin.html")
 	else:
 		return render_template('login.html')
 
 # Teacher Route
 @app.route("/teacher", methods = ["GET","POST"])
+@login_required
 def teacher():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template("teacher.html")
 	else:
 		return render_template('login.html')
 
 # Student Route
 @app.route("/student", methods = ["GET","POST"])
+@login_required
 def student():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template("student_landing.html")
 	else:
 		return render_template('login.html')
@@ -137,15 +150,17 @@ def student():
 
 # Logout Route
 @app.route("/logout")
+@login_required
 def logout():
-	session.pop('user', None)
-	return render_template("login.html")
+	session.clear()
+	return redirect(url_for("login"))
 
 # Playground
 @app.route("/playground")
+@login_required
 def playground():
 
-	if 'user' in session:
+	if 'logged in' in session:
 		email = session['email']
 		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
 		role = ''.join(roles)
@@ -159,8 +174,9 @@ def playground():
 
 # Take Quiz Route
 @app.route("/takeQuiz")
+@login_required
 def takeQuiz():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template('takeQuiz.html')
 	else:
 		return render_template('login.html')
@@ -168,8 +184,9 @@ def takeQuiz():
 
 # Review Grades Route
 @app.route("/reviewGrades")
+@login_required
 def reviewGrades():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template('reviewGrades.html')
 	else:
 		return render_template('login.html')
@@ -177,8 +194,9 @@ def reviewGrades():
 
 # Create Quiz Route
 @app.route("/createQuiz")
+@login_required
 def createQuiz():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template('createQuiz.html')
 	else:
 		return render_template('login.html')
@@ -186,8 +204,9 @@ def createQuiz():
 
 # Grade Quiz Route
 @app.route("/gradeQuiz")
+@login_required
 def gradeQuiz():
-	if 'user' in session:
+	if 'logged in' in session:
 		return render_template('gradeQuiz.html')
 	else:
 		return render_template('login.html')
