@@ -20,15 +20,6 @@ app.config['SECRET_KEY'] = 'SER@515@Findler'
 def home():
 	return render_template("home.html")
 
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            return redirect(url_for('login'))
-    return wrap
-
 # Register Page Route
 @app.route("/register", methods = ["GET","POST"])
 def register():
@@ -122,7 +113,6 @@ def delete(email):
 
 # Admin Route
 @app.route("/admin", methods = ["GET","POST"])
-@login_required
 def admin():
 	if 'logged in' in session:
 		return render_template("admin.html")
@@ -131,7 +121,6 @@ def admin():
 
 # Teacher Route
 @app.route("/teacher", methods = ["GET","POST"])
-@login_required
 def teacher():
 	if 'logged in' in session:
 		return render_template("teacher.html")
@@ -140,24 +129,19 @@ def teacher():
 
 # Student Route
 @app.route("/student", methods = ["GET","POST"])
-@login_required
 def student():
 	if 'logged in' in session:
 		return render_template("student_landing.html")
 	else:
 		return render_template('login.html')
-	
-
 # Logout Route
 @app.route("/logout")
-@login_required
 def logout():
 	session.clear()
 	return redirect(url_for("login"))
 
 # Playground
 @app.route("/playground")
-@login_required
 def playground():
 
 	if 'logged in' in session:
@@ -174,7 +158,6 @@ def playground():
 
 # Take Quiz Route
 @app.route("/takeQuiz")
-@login_required
 def takeQuiz():
 	if 'logged in' in session:
 		return render_template('takeQuiz.html')
@@ -184,27 +167,39 @@ def takeQuiz():
 
 # Review Grades Route
 @app.route("/reviewGrades")
-@login_required
 def reviewGrades():
 	if 'logged in' in session:
-		return render_template('reviewGrades.html')
+		email = session['email']
+		name = _engine.execute( "SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
+		grade = _engine.execute( "SELECT * FROM Grades WHERE Email = %s", [email]).fetchall()
+		print(type(name))
+		return render_template('reviewGrades.html', grades = grade, user = name)
 	else:
 		return render_template('login.html')
-	
+
 
 # Create Quiz Route
-@app.route("/createQuiz")
-@login_required
+@app.route("/createQuiz", methods = ["GET","POST"])
 def createQuiz():
 	if 'logged in' in session:
-		return render_template('createQuiz.html')
+		name = request.form.get("Names")
+		description = request.form.get("Descriptions")
+		Roles = request.form.get("rolePicker")
+		email = session['email']
+		Instructors = _engine.execute("SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
+		instructor = ''.join(Instructors)
+		names = _engine.execute("SELECT Name FROM Quiz WHERE Name = %s", [name]).fetchone()
+		if names is None:
+			_engine.execute("INSERT INTO Quiz VALUES (%s, %s, %s, %s)", [name, instructor, Roles, description])
+			db.commit()
+			return render_template('createQuiz.html')
+		else:
+			return "Quiz already exists"
 	else:
 		return render_template('login.html')
-	
 
 # Grade Quiz Route
 @app.route("/gradeQuiz")
-@login_required
 def gradeQuiz():
 	if 'logged in' in session:
 		return render_template('gradeQuiz.html')
