@@ -9,18 +9,18 @@ CREATE TABLE Quiz (
 CREATE TABLE Questions (
 	ID INT AUTO_INCREMENT,
 	Question varchar(1000),
+	Level varchar(100) NOT NULL,
 	Quiz_Name varchar(500),
 	PRIMARY KEY (ID),
 	FOREIGN KEY (Quiz_Name) REFERENCES Quiz(Name)
 );
 
 CREATE TABLE Choices (
-	ID INT AUTO_INCREMENT,
+	ID INT NOT NULL,
 	Choice varchar(100) NOT NULL,
 	IfAnswer varchar(1) NOT NULL,
 	Quiz_Name varchar(500),
 	Question_ID INT,
-	PRIMARY KEY (ID),
 	FOREIGN KEY (Quiz_Name) REFERENCES Quiz(Name),
 	FOREIGN KEY (Question_ID) REFERENCES Questions(ID)
 );

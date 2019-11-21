@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, session, logging, url_for, redirect, flash
 from sqlalchemy import create_engine
-from flask_login import fresh_login_required
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import text
 from functools import wraps
@@ -63,32 +62,31 @@ def login():
 		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [em]).fetchone()
 		role =  ''.join(roles)
 
-		statuses = _engine.execute("SELECT Status FROM Users WHERE Email = %s", [em]).fetchone()
-		status =  ''.join(statuses)
+		statuses = _engine.execute("SELECT Status FROM Users WHERE Email = %s", [email]).fetchone()
+		status = str(statuses)
 
 		# If both the fields match, then register
 		if password==Password:
 			# If admin
-			if role == "Admin" and status == "1":
+			if "Admin" in role and "1" in status:
 				session['logged in'] = em
 				return redirect(url_for("admin"))
 
 			# If teacher
-			elif role == "Teacher" and status == "1":
+			if "Teacher" in role and "1" in status:
 				session['logged in'] = em
 				return redirect(url_for("teacher"))
 			
 			# IF Student
-			elif "Student" in role and status == "1":
+			if "Student" in role and "1" in status:
 				session['logged in'] = em
 				return redirect(url_for("student"))
 			
 			# If Neither
-			elif status == "0":
-				session.clear()
-				return "You're not authorized for login!"
-
-	return render_template('login.html')
+			elif "0" in status:
+				return redirect(url_for("free"))
+	else:			
+		return render_template("login.html")
 
 # Admin Console Route
 @app.route("/adminconsole", methods = ["GET","POST"])
@@ -115,7 +113,9 @@ def delete(email):
 @app.route("/admin", methods = ["GET","POST"])
 def admin():
 	if 'logged in' in session:
-		return render_template("admin.html")
+		email = session['email']
+		name = _engine.execute( "SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
+		return render_template("admin.html", user = name)
 	else:
 		return render_template('login.html')
 
@@ -123,7 +123,9 @@ def admin():
 @app.route("/teacher", methods = ["GET","POST"])
 def teacher():
 	if 'logged in' in session:
-		return render_template("teacher.html")
+		email = session['email']
+		name = _engine.execute( "SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
+		return render_template("teacher.html", user = name)
 	else:
 		return render_template('login.html')
 
@@ -131,7 +133,9 @@ def teacher():
 @app.route("/student", methods = ["GET","POST"])
 def student():
 	if 'logged in' in session:
-		return render_template("student_landing.html")
+		email = session['email']
+		name = _engine.execute( "SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
+		return render_template("student_landing.html", user = name)
 	else:
 		return render_template('login.html')
 # Logout Route
@@ -149,10 +153,14 @@ def playground():
 		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
 		role = ''.join(roles)
 		# If Elementary Student, else Load Middle School Playground
-		if "Elementary" in role:
-			return render_template('playground.html')
+		if "1-2" in role:
+			return render_template('Playground - Class 1-2.html')
+		elif "3-4" in role:
+			return render_template('Playground - Class 3-4.html')
+		elif "5-8" in role:
+			return render_template('Playground - Class 5-8.html')
 		else:
-			return render_template('playground_middle.html')
+			return render_template('Playground - Class 9-12.html')
 	else:
 		return render_template('login.html')
 
@@ -205,7 +213,28 @@ def gradeQuiz():
 		return render_template('gradeQuiz.html')
 	else:
 		return render_template('login.html')
+
+@app.route("/playground_free")
+def playground_free():
+	email = session['email']
+	roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
+	role =  ''.join(roles)
+	if "1-2" in role:
+		return render_template('Playground - Class 1-2.html')
+	elif "3-4" in role:
+		return render_template('Playground - Class 3-4.html')
+	elif "5-8" in role:
+		return render_template('Playground - Class 5-8.html')
+	else:
+		return render_template('Playground - Class 9-12.html')
+
+@app.route("/free")
+def free():
+	return render_template("student_free.html")
 	
+@app.route("/free_playground")
+def free_playground():
+	return render_template('Playground - Class 5-8.html')
 
 # Run Main in Debug mode
 if __name__ == '__main__':

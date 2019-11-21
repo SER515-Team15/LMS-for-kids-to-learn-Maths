@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Interactive Learning Application</title>
+  <title>Teacher Dashboard</title>
 
   <!-- Bootstrap core CSS -->
   <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
   <!-- Custom styles for this template -->
   <link href="static/css/landing-page.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
-
   <!-- Grid row-->
         <div class="col-md-12 bg-light d-flex">
 
           <!-- Grid column -->
           <div class="col-md-2 pt-3">
             <h2 class="font-weight-bold" style = "font-family: 'Nanum Brush Script', cursive;">
-              <a href = "/admin" style= "text-decoration: none;">cos(Y !=)</a>
+              <a href = "/teacher" style= "text-decoration: none;">LeARn</a>
             </h2>
              
           </div>
@@ -48,7 +48,7 @@
   <section class="features-icons bg-white text-center">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
             <a href="{{url_for('playground')}}" style = "text-decoration: none">
             <div class="features-icons-icon d-flex">
@@ -59,7 +59,7 @@
           </a>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
             <a href ="#" id = "createQuizzes" data-toggle="modal" data-target="#myModal" style = "text-decoration: none">
             <div class="features-icons-icon d-flex">
@@ -67,17 +67,6 @@
             </div>
             <h3>Create a Quiz</h3>
             <p class="lead mb-0">Create a quiz for students.</p>
-          </a>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <a href ="{{url_for('gradeQuiz')}}" style = "text-decoration: none">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-check m-auto text-primary"></i>
-            </div>
-            <h3>Grade a Quiz</h3>
-            <p class="lead mb-0">Grade Quizzes.</p>
           </a>
           </div>
         </div>
@@ -132,7 +121,6 @@
   </div>
 </form>
 
-
 <script>
   $(document).ready(function() {
     $("#createQuizzes").on('click', function{
@@ -152,7 +140,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
   </script>
   <!--JS below-->
-
 </body>
 
 </html>
