@@ -7,7 +7,7 @@ CREATE TABLE Quiz (
 );
 
 CREATE TABLE Questions (
-	ID INT AUTO_INCREMENT,
+	ID varchar(20) NOT NULL,
 	Question varchar(1000),
 	Level varchar(100) NOT NULL,
 	Quiz_Name varchar(500),

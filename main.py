@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import text
 from functools import wraps
+import random
 
 app = Flask(__name__)
 
@@ -147,7 +148,6 @@ def logout():
 # Playground
 @app.route("/playground")
 def playground():
-
 	if 'logged in' in session:
 		email = session['email']
 		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
@@ -194,6 +194,8 @@ def createQuiz():
 		description = request.form.get("Descriptions")
 		Roles = request.form.get("rolePicker")
 		email = session['email']
+		session['level'] = Roles
+		session['QuizName'] = name
 		Instructors = _engine.execute("SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
 		instructor = ''.join(Instructors)
 		names = _engine.execute("SELECT Name FROM Quiz WHERE Name = %s", [name]).fetchone()
@@ -236,6 +238,16 @@ def free():
 def free_playground():
 	return render_template('Playground - Class 5-8.html')
 
+@app.route("/submitQuiz", methods = ["GET","POST"])
+def submitQuiz():
+	r1 = random.randint(0, 10)
+	qID = r1
+	question = request.form.get("Q1")
+	level = session['level']
+	quizName = session['QuizName']
+	_engine.execute("INSERT INTO Questions VALUES (%s, %s, %s, %s)", [qID, question, level, quizName])
+	db.commit()
+	return redirect(url_for("teacher"))
 # Run Main in Debug mode
 if __name__ == '__main__':
 	app.debug = True

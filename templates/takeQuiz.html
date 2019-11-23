@@ -7,88 +7,85 @@
     <link rel="stylesheet" type="text/css" href="style.css">
       <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
     <style>
-        .mb20 {
+        body{
+            font-size: 20px;
+            font-family: 'Work Sans', sans-serif;
+            color: #333;
+            font-weight: 300;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        h1{
+            font-weight: 300;
+            margin: 0px;
+            padding: 10px;
+            font-size: 20px;
+            background-color: #444;
+            color: #fff;
+            text-align: center;
+        }
+
+        .question{
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .answers {
             margin-bottom: 20px;
+            text-align: left;
+            display: inline-block;
         }
-        .mb40 {
-            margin-bottom: 40px;
+
+        .answers label{
+            display: block;
+            margin-bottom: 10px;
         }
-        .center {
-            margin: auto;
+
+        .slide{
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
-        #quiz {
-            padding: 2%;
+
+        .active-slide{
+            opacity: 1;
+            z-index: 2;
         }
-        h3 {
-            padding: 3% 0;
+
+        .quiz-container{
+            position: relative;
+            height: 200px;
+            margin-top: 40px;
+        }
+        .results{
+            float:center;
+            font-weight: 300;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-
-    <nav class="row bg-light sticky-top text-center d-flex justify-content-center mb-4">
-
-          <!-- Grid column -->
-          <div class="col-md-2 pt-3">
-            <h1 class="font-weight-bold" style = "font-family: 'Nanum Brush Script', cursive; float:left;">
-              <a href = "/adminconsole" style= "text-decoration: none;">LeARn</a>
-            </h1>
-             
-          </div>
-          <!-- Grid column -->
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <!-- Grid column -->
-          <div class="col-md-2 pt-4">
-            <h6 class="text-uppercase font-weight-bold">
-              <a href="/admin" style= "text-decoration: none;">Home</a>
-            </h6>
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-md-2 pt-4">
-            <h6 class="text-uppercase font-weight-bold">
-              <a href="/reviewGrades" style= "text-decoration: none;">Review Grades</a>
-            </h6>
-          </div>
-          <!-- Grid column -->
-
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <!-- Grid column -->
-          <div class="col-md-2 pt-2" >
-            <a class="btn btn-primary text-uppercase mt-2" style= "float:right" href="/logout">Log out</a>
-          </div>
-          
-      </nav>
-
-
-    <div class="grid">
-        <div id="quiz">
-            <h3>Assignment 2</h3>
-
-            <div class="col-md-8 text-center center">
-                <h4 id="question" class="mb40"></h4>
-
-                <div class="buttons col-md-6 center">
-                    <button id="btn0" class="btn btn-primary col-md-12 mb20"><span id="choice0"></span></button>
-                    <button id="btn1" class="btn btn-primary col-md-12 mb20"><span id="choice1"></span></button>
-                    <button id="btn2" class="btn btn-primary col-md-12 mb20"><span id="choice2"></span></button>
-                    <button id="btn3" class="btn btn-primary col-md-12 mb20"><span id="choice3"></span></button>
-                </div>
-            </div>
-
-
-            <hr style="margin-top: 50px">
-            <footer>
-                <p id="progress">Question x of y</p>
-            </footer>
+    <h1>Assignment 2 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<button class = "btn btn-primary hide" style = "float:right; margin-right: 10px;" id="exitButton"> Exit Quiz </button> </h1>
+        <div class="quiz-container">
+            <div id="quiz"></div>
         </div>
-    </div>
 
-
+        <button class = "btn btn-primary" id="previous">Previous Question</button>
+        <button class = "btn btn-primary" id="next">Next Question</button>
+        <button class = "btn btn-success" id="submit">Submit Quiz</button>
+        <br><br><br>
+        <div id="results"></div>
+    <script type="text/javascript">
+        document.getElementById("exitButton").onclick = function () {
+            location.href = "/student";
+        };
+    </script>
 <script src="static/js/takeQuiz.js"></script>
-
 </body>
 </html>
