@@ -1,5 +1,42 @@
 (function() {
-  const myQuestions = [
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get('quizName');
+  let score = 0;
+  console.log(myParam)
+  const myQuestions = []
+      var quizContainer = document.getElementById("quiz");
+  var resultsContainer = document.getElementById("results");
+  var submitButton = document.getElementById("submit");
+   var previousButton = document.getElementById("previous");
+  var nextButton = document.getElementById("next");
+  var slides = document.querySelectorAll(".slide");
+    var currentSlide = 0;
+
+  $.ajax({
+        url: `/getQuestions?quizname=${myParam}`,
+        type: 'GET',
+        success: function(res) {
+            console.log(res);
+            //alert(res);
+            res = JSON.parse(res)
+            res.forEach(e => myQuestions.push({question: e.question, id: e.id}));
+
+
+  // display quiz right away
+  buildQuiz();
+  slides = document.querySelectorAll(".slide");
+
+
+
+  showSlide(0);
+
+  // on submit, show results
+  submitButton.addEventListener("click", showResults);
+  previousButton.addEventListener("click", showPreviousSlide);
+  nextButton.addEventListener("click", showNextSlide);
+        }
+    });
+  /*const myQuestions = [
     {
       question: "2+3",
       answers: {
@@ -45,12 +82,12 @@
       },
       correctAnswer: "b"
     }
-  ];
+  ];*/
 
   function buildQuiz() {
     // we'll need a place to store the HTML output
     const output = [];
-
+    console.log(myQuestions)
     // for each question...
     myQuestions.forEach((currentQuestion, questionNumber) => {
       // we'll want to store the list of answer choices
@@ -72,7 +109,7 @@
       output.push(
         `<div class="slide">
            <div class="question"> ${currentQuestion.question} </div>
-           <div class="answers"> ${answers.join("")} </div>
+           <div class="answers"> <input type="text" id="answer_${questionNumber}" class="form-control" /></div>
          </div>`
       );
     });
@@ -81,8 +118,7 @@
     quizContainer.innerHTML = output.join("");
   }
 
-  function showResults() {
-    // gather answer containers from our quiz
+function showResults() {
     const answerContainers = quizContainer.querySelectorAll(".answers");
 
     // keep track of user's answers
@@ -108,10 +144,30 @@
         answerContainers[questionNumber].style.color = "red";
       }
     });
+    const ans = document.getElementById('answer_'+currentSlide).value.trim()
+    const qDetails = myQuestions[currentSlide];
+    console.log(ans, qDetails)
+    $.ajax({
+        url: `/checkAnswers?questionName=${qDetails.id}&quizName=${myParam}&ans=${ans}`,
+        type: 'GET',
+        success: function(res) {
+           score = score + 1;
+      resultsContainer.innerHTML = `${score} out of ${myQuestions.length}`;
+      previousButton.style.display = "none";
+      submitButton.style.display = "none";
+      $.ajax({
+        url: `/postResult?marks=${score}`,
+        type: 'POST',
+        success: function(res) {
+        console.log("inside ajax");
+        }
+    });
+        },
+        error: function(res) {
+        }
+    });
 
-    // show number of correct answers out of total
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-  }
+}
 
   function showSlide(n) {
     slides[currentSlide].classList.remove("active-slide");
@@ -134,29 +190,25 @@
   }
 
   function showNextSlide() {
-    showSlide(currentSlide + 1);
+    console.log(document.getElementById('answer_'+currentSlide).value)
+    const ans = document.getElementById('answer_'+currentSlide).value.trim()
+    const qDetails = myQuestions[currentSlide];
+    $.ajax({
+        url: `/checkAnswers?questionName=${qDetails.id}&quizName=${myParam}&ans=${ans}`,
+        type: 'GET',
+        success: function(res) {
+           showSlide(currentSlide + 1);
+           score = score + 1;
+        },
+        error: function(res) {
+           showSlide(currentSlide + 1);
+        }
+    });
   }
 
   function showPreviousSlide() {
     showSlide(currentSlide - 1);
   }
 
-  const quizContainer = document.getElementById("quiz");
-  const resultsContainer = document.getElementById("results");
-  const submitButton = document.getElementById("submit");
 
-  // display quiz right away
-  buildQuiz();
-
-  const previousButton = document.getElementById("previous");
-  const nextButton = document.getElementById("next");
-  const slides = document.querySelectorAll(".slide");
-  let currentSlide = 0;
-
-  showSlide(0);
-
-  // on submit, show results
-  submitButton.addEventListener("click", showResults);
-  previousButton.addEventListener("click", showPreviousSlide);
-  nextButton.addEventListener("click", showNextSlide);
 })();
