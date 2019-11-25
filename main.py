@@ -257,12 +257,18 @@ def createQuestion():
 	'''
 
 # Grade Quiz Route
-@app.route("/gradeQuiz")
-def gradeQuiz():
+@app.route("/showQuizzes")
+def showQuizzes():
 	if 'logged in' in session:
-		return render_template('gradeQuiz.html')
+		email = session['email']
+		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
+		role = ''.join(roles)
+		print(role)
+		quizzes = _engine.execute("SELECT Name, Instructor FROM Quiz WHERE Quiz_Level = %s", [role]).fetchall()
+		return render_template('viewQuizzes.html', quizzes = quizzes)
 	else:
 		return render_template('login.html')
+
 
 @app.route("/playground_free")
 def playground_free():
