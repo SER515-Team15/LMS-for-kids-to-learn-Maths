@@ -26,6 +26,19 @@
 
 <body>
 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                  <span>{{ message }}</span>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+
    <!-- Grid row-->
         <div class="col-md-12 bg-light d-flex">
 
@@ -65,16 +78,6 @@
     </div>
   </section>
 
-  <script type="text/javascript">
-    
-    window.onload = function(){
-      var alerted = localStorage.getItem('alerted') || '';
-      if (alerted != 'yes') {
-         alert("Welcome User! \nAs your request is currently under review, your account has restricted access!")
-         localStorage.setItem('alerted','yes');
-        }
-    };
-  </script>
   <!-- Bootstrap core JavaScript -->
   <script src="static/vendor/jquery/jquery.min.js"></script>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

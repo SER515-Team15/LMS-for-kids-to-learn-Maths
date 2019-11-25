@@ -11,18 +11,15 @@ CREATE TABLE Questions (
 	Question varchar(1000),
 	Level varchar(100) NOT NULL,
 	Quiz_Name varchar(500),
-	PRIMARY KEY (ID),
 	FOREIGN KEY (Quiz_Name) REFERENCES Quiz(Name)
 );
 
-CREATE TABLE Choices (
-	ID INT NOT NULL,
-	Choice varchar(100) NOT NULL,
-	IfAnswer varchar(1) NOT NULL,
+CREATE TABLE Answer (
+	ID varchar(20) NOT NULL,
+	Choice varchar(20) NOT NULL,
 	Quiz_Name varchar(500),
-	Question_ID INT,
-	FOREIGN KEY (Quiz_Name) REFERENCES Quiz(Name),
-	FOREIGN KEY (Question_ID) REFERENCES Questions(ID)
+	Question_ID varchar(5),
+	FOREIGN KEY (Quiz_Name) REFERENCES Quiz(Name)
 );
 
 CREATE TABLE Grades (

@@ -23,7 +23,6 @@ def home():
 # Register Page Route
 @app.route("/register", methods = ["GET","POST"])
 def register():
-
 	# Get elements from the database
 	if request.method == "POST":
 		name = request.form.get("name")
@@ -36,8 +35,10 @@ def register():
 		if password == confirmpass:
 			_engine.execute("INSERT INTO Users VALUES (%s, %s, %s, %s, %s)", [name, email, password, role, status])
 			db.commit()
+			flash("Successfully Registered!", "success")
 			return render_template("login.html")
 		else:
+			flash("Passwords do not match!", "danger")
 			return render_template('register.html')
 
 	return render_template('register.html')
@@ -46,7 +47,7 @@ def register():
 @app.route("/login", methods = ["GET","POST"])
 def login():
 	if request.method == "POST":
-
+		# Get elements from the database
 		# Get elements from the database
 		email = request.form.get("email")
 		session['email'] = request.form.get("email")
@@ -56,36 +57,53 @@ def login():
 		EmailID = _engine.execute(emailsql).fetchone()
 		em =  ''.join(EmailID)
 
-		passwordsql = "SELECT password FROM Users WHERE email = '" + em + "'"
-		Password = _engine.execute(passwordsql).fetchone()
-		Password = ''.join(Password)
+		passwordsql = "SELECT password FROM Users WHERE email = '" + email + "'"
+		Passwords = _engine.execute(passwordsql).fetchone()
+		Password = ''.join(Passwords)
 
-		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [em]).fetchone()
+		roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
 		role =  ''.join(roles)
 
 		statuses = _engine.execute("SELECT Status FROM Users WHERE Email = %s", [email]).fetchone()
 		status = str(statuses)
 
+		if em is None:
+			flash("User does not exist!", "danger")
+			return redirect(url_for("login"))
+
+		print(password, Password)
 		# If both the fields match, then register
 		if password==Password:
+			name = _engine.execute( "SELECT Name FROM Users WHERE Email = %s", [em]).fetchone()
 			# If admin
 			if "Admin" in role and "1" in status:
 				session['logged in'] = em
+				for row in name:
+					flash("Welcome Back,  " + str(row) , "success")
 				return redirect(url_for("admin"))
 
 			# If teacher
 			if "Teacher" in role and "1" in status:
 				session['logged in'] = em
+				for row in name:
+					flash("Welcome Back,  " + str(row) , "success")
 				return redirect(url_for("teacher"))
 			
 			# IF Student
 			if "Student" in role and "1" in status:
 				session['logged in'] = em
+				for row in name:
+					flash("Welcome Back,  " + str(row) , "success")
 				return redirect(url_for("student"))
 			
 			# If Neither
 			elif "0" in status:
+				for row in name:
+					flash("Welcome Back, " + " " + str(row), "warning")
 				return redirect(url_for("free"))
+		else:
+			flash("Password is incorrect!", "danger")
+			return redirect(url_for("login"))
 	else:			
 		return render_template("login.html")
 
@@ -101,6 +119,7 @@ def adminconsole():
 def update(email):
 	_engine.execute("UPDATE Users SET status = '1' WHERE email = %s",[email])
 	db.commit()
+	flash("User added successfully", "success")
 	return redirect(url_for("adminconsole"))
 
 # Delete a particular user
@@ -108,6 +127,7 @@ def update(email):
 def delete(email):
 	_engine.execute("DELETE FROM Users WHERE email = %s", [email])
 	db.commit()
+	flash("User deleted successfully", "danger")
 	return redirect(url_for("adminconsole"))
 
 # Admin Route
@@ -204,9 +224,37 @@ def createQuiz():
 			db.commit()
 			return render_template('createQuiz.html')
 		else:
-			return "Quiz already exists"
+			flash("Quiz already exists!", "danger")
+			return redirect(url_for("teacher"))
 	else:
 		return render_template('login.html')
+
+#Submit Questions and Answers
+@app.route("/createQuestion", methods = ["GET", "POST"])
+def createQuestion():
+	levels = session['level']
+	quizName = session['QuizName'] 
+	i = 1
+	while True:
+		QID = "Q" + str(i)
+		question = request.form.get("Q" + str(i))
+		AID = "A" + str(i)
+		answer = request.form.get("A" + str(i))
+		if question is None:
+			break
+		_engine.execute("INSERT INTO Questions VALUES (%s, %s, %s, %s)", [QID, question, levels, quizName])
+		db.commit()
+		_engine.execute("INSERT INTO Answer VALUES (%s, %s, %s, %s)", [AID, answer, quizName, QID])
+		db.commit()
+		i+=1
+
+	flash("Quiz added successfully!","success")
+	return redirect(url_for("teacher"))
+	'''
+	for i in 
+		question = request.form.get("Q" + i)
+		answer = request.form.get("A" + i)
+	'''
 
 # Grade Quiz Route
 @app.route("/gradeQuiz")
