@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    body {
+    padding: 20px;
+    }
+ 
+  .list-group-item {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    width: 95px;
+    height: 95px;
+    float: left;
+
+  }
+    #B{
+      width: 1000px;
+      height: 250px;
+      border: 4px dashed grey;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 1em 1em 2em 1em;
+      overflow-y: hidden;
+    }
+    #A{
+      width: 1140px;
+      height: 90px;
+      border: 4px dashed grey;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 1em 1em 2em 1em;
+      overflow-y: hidden;
+    }
+
+    #C{
+      width: 270px;
+      height: 90px;
+      border: 4px dashed grey;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 1em 1em 2em 1em;
+      overflow-y: hidden;
+    }
+    .container .box .box-row{
+      display: table-row;
+    }
+      .container .box .box-cell{
+      display: table-cell;
+      width: 60%;
+      padding: 10px;
+    }
+    .dragable-button{
+
+      width: 95px;
+      height: 95px;
+   
+      margin: 2px;
+      text-align: center;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 1em;
+      float: left;
+     
+    }
+  </style>
+</head>
+<body>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+  <!-- Latest Sortable -->
+  <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<h1 align="center">Playground</h1>
+<div class="container">
+<div class="box">
+  <div class="box-row">
+
+  <div id="B" class="box-cell list-group">
+    
+    <!-- <div class="list-group-item"></div> -->
+  </div>
+
+  <div id="C" class="box-cell list-group">
+    
+    <div id='operand' class="list-group-item">+</div>
+    <div class="list-group-item">-</div>
+    <div class="list-group-item">x</div>
+    <div class="list-group-item">/</div>
+    <button id='equals' class='dragable-button'>=</button>
+  <button id='reset' class='dragable-button'>RESET</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="container">
+  <div class="box-row">
+    <div class="box">
+  <div class="box-row">
+  <div id="A" class="box-cell list-group">
+    <h1>Elements</h1>
+    <div class="list-group-item">1</div>
+    <div class="list-group-item">2</div>
+    <div class="list-group-item">3</div>
+    <div class="list-group-item">4</div>
+    <div class="list-group-item">5</div>
+    <div class="list-group-item">6</div>
+    <div class="list-group-item">7</div>
+    <div class="list-group-item">8</div>
+    <div class="list-group-item">9</div>
+      
+  
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- <div class="container">
+  <div class="box-row">
+    <div class="box">
+  <div class="box-row">
+  <div id="C" class="box-cell list-group">
+    <h1>Operators</h1>
+    <div class="list-group-item">+</div>
+    <div class="list-group-item">-</div>
+    <div class="list-group-item">x</div>
+    <div class="list-group-item">/</div>
+    <button id='equals' class='dragable-button'>=</button>
+  <button id='reset' class='dragable-button'>RESET</button>
+</div>
+</div>
+</div>
+</div>
+</div> -->
+  
+
+<script>
+
+
+// Function for sortable js drag,drop, sort
+  Sortable.create(A, {
+  animation: 200,
+  group: {
+    name: "shared",
+    pull: "clone",
+    revertClone: true,
+    put: false
+  },
+  sort: false
+});
+    Sortable.create(C, {
+  animation: 200,
+  group: {
+    name: "shared",
+    pull: "clone",
+    revertClone: true,
+    put: false
+  },
+  sort: false
+});
+
+Sortable.create(B, {
+  group: "shared",
+  sort: true,
+  direction: 'horizontal'
+});
+//reset function
+function clickFunction(){
+  $('#B').html("");
+  
+
+}
+
+//equal function
+
+function equalFunction(){
+    var exChildren=$("#B").children();
+  var arr=[];
+  var operand='';
+
+  for (var i=0; i<exChildren.length; i++){ 
+    
+    if (exChildren[i].innerHTML!='+' && exChildren[i].innerHTML!='-'&& exChildren[i].innerHTML!='x' && exChildren[i].innerHTML!='/'){
+      arr.push(parseInt(exChildren[i].innerHTML));
+      
+    }
+    else{
+      operand=exChildren[i].innerHTML;
+      var indx=i;
+    }
+
+  }
+  console.log(indx);
+  var a1=arr[0];
+  var a2=arr[1];
+  if (operand=='+'){
+    bool=false;
+    var result=a1+a2;
+  }
+  else if (operand=='-'){
+    bool=false;
+    var result=a1-a2;
+  }
+  else if (operand=='x'){
+    bool=false;
+    var result=a1*a2;
+  }
+  else if (operand=='/'){
+    bool=true;
+    var result1=a1/a2;
+    result1=Math.floor(result1);
+    var result2=a1%a2;
+  }
+  if(bool)
+  {
+    if (typeof(result1) == 'undefined' ||   isNaN(parseFloat(result1))) {
+    var result='Sorry! &#128546 Wrong Equation';
+    var html='<div draggable="true" class="list-group-item" data-title="Box 9" data-price="9" id="vals" style="background:#de0b0b;font-size: .8em;" >'+result+'</div>';   
+    
+    $('#B').append(html);  
+  }
+    else{
+    result='Reminder:'+result2+' Quotient:'+result1;
+    var html='<div draggable="true" class="list-group-item" data-title="Box 9" data-price="9" id="vals">=</div><div draggable="true" class="list-group-item" data-title="Box 9" data-price="9" id="vals" style="font-size:0.8em;">'+result+'</div>';    
+    $('#B').append(html);
+  }
+}
+  else{
+  
+  if (typeof(result) == 'undefined' ||   isNaN(parseFloat(result))) {
+    var result='Sorry! &#128546 Wrong Equation';
+  var html='<div draggable="true" class="list-group-item" data-title="Box 9" data-price="9" id="vals" style="background:#de0b0b;font-size: .8em;" >'+result+'</div>';   
+  
+  $('#B').append(html);  
+  }
+  else{
+
+    var html='<div draggable="true" class="list-group-item" data-title="Box 9" data-price="9" id="vals">=</div><div draggable="true" class="list-group-item" data-title="Box 9" data-price="9" id="vals">'+result+'</div>';   
+  
+  $('#B').append(html);
+
+  }
+}
+}
+
+$(document).ready(function() {
+
+    clickFunction();
+    // Reset onClick
+    document.getElementById("reset").addEventListener("click",clickFunction);
+    
+    // Equals onClick
+    document.getElementById("equals").addEventListener("click",equalFunction);
+
+});
+
+</script>
+
+
+</body>
+</html>
