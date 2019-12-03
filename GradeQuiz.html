@@ -79,8 +79,8 @@
         <br>
         <br>
         <div class="btn-group-vertical">
-          <button type="button" class="btn btn-success" id="update" onclick="document.getElementById('container1').style.backgroundColor='green'; score()">Correct</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('container1').style.backgroundColor='red'">Incorrect</button>
+          <button type="button" class="btn btn-success" id="update" onclick="document.getElementById('container1').style.backgroundColor='green'; this.disabled=true; score()">Correct</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('container1').style.backgroundColor='red' this.disabled=true; rscore()">Incorrect</button>
       </div>
     </div>
     </div>
@@ -109,8 +109,8 @@
         <br>
         <br>
         <div class="btn-group-vertical">
-          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container2').style.backgroundColor='green'; score()">Correct</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('container2').style.backgroundColor='red'">Incorrect</button>
+          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container2').style.backgroundColor='green'; this.disabled=true; score()">Correct</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('container2').style.backgroundColor='red'; this.disabled=true; rscore()">Incorrect</button>
       </div>
     </div>
     </div>
@@ -139,8 +139,8 @@
         <br>
         <br>
         <div class="btn-group-vertical">
-          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container3').style.backgroundColor='green'; score()">Correct</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('container3').style.backgroundColor='red'">Incorrect</button>
+          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container3').style.backgroundColor='green'; this.disabled=true; score()">Correct</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('container3').style.backgroundColor='red'; this.disabled=true; rscore()">Incorrect</button>
       </div>
     </div>
     </div>
@@ -169,8 +169,8 @@
         <br>
         <br>
         <div class="btn-group-vertical">
-          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container4').style.backgroundColor='green'; score()">Correct</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('container4').style.backgroundColor='red'">Incorrect</button>
+          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container4').style.backgroundColor='green'; this.disabled=true; score()">Correct</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('container4').style.backgroundColor='red'; this.disabled=true; rscore()">Incorrect</button>
       </div>
     </div>
     </div>
@@ -199,8 +199,8 @@
         <br>
         <br>
         <div class="btn-group-vertical">
-          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container5').style.backgroundColor='green'; score()">Correct</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('container5').style.backgroundColor='red'">Incorrect</button>
+          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container5').style.backgroundColor='green'; this.disabled=true; score()">Correct</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('container5').style.backgroundColor='red'; this.disabled=true; rscore()">Incorrect</button>
       </div>
     </div>
     </div>
@@ -229,14 +229,18 @@
         <br>
         <br>
         <div class="btn-group-vertical">
-          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container6').style.backgroundColor='green'; score()">Correct</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('container6').style.backgroundColor='red'">Incorrect</button>
+          <button type="button" class="btn btn-success" id ="update" onclick="document.getElementById('container6').style.backgroundColor='green'; this.disabled=true; score()">Correct</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('container6').style.backgroundColor='red';  this.disabled=true; rscore()">Incorrect</button>
       </div>
     </div>
     </div>
   </div>
 
-  <div><h4>Final Score:</h4><h4 id="score">0</h4><div>
+  <div><h4>Final Score:</h4>
+    <h4 id="score">0</h4>
+    <input type="submit" class ="btn btn-success" onclick="sendscore();"></button>
+  <div>
+
 
   </section>
       
@@ -294,6 +298,18 @@
       var count = document.getElementById("score").innerHTML;
       count++;
       document.getElementById("score").innerHTML = count;
+    }
+
+    function rscore()
+    {
+      var count = document.getElementById("score").innerHTML;
+      count--;
+      document.getElementById("score").innerHTML = count;
+    }
+
+    function sendscore()
+    {
+      var score = document.getElementById("score").innerHTML;
     }
 
   </script>
