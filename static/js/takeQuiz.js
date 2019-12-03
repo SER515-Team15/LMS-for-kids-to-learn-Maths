@@ -1,16 +1,20 @@
+/**
+ * @author Sayali Tanawade <ssuryaka@asu.edu>
+ */
+
 (function() {
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get('quizName');
   let score = 0;
   console.log(myParam)
   const myQuestions = []
-      var quizContainer = document.getElementById("quiz");
+  var quizContainer = document.getElementById("quiz");
   var resultsContainer = document.getElementById("results");
   var submitButton = document.getElementById("submit");
-   var previousButton = document.getElementById("previous");
+  var previousButton = document.getElementById("previous");
   var nextButton = document.getElementById("next");
   var slides = document.querySelectorAll(".slide");
-    var currentSlide = 0;
+  var currentSlide = 0;
 
   $.ajax({
         url: `/getQuestions?quizname=${myParam}`,
@@ -36,53 +40,6 @@
   nextButton.addEventListener("click", showNextSlide);
         }
     });
-  /*const myQuestions = [
-    {
-      question: "2+3",
-      answers: {
-        a: "2",
-        b: "5",
-        c: "4"
-      },
-      correctAnswer: "b"
-    },
-    {
-      question: "1+4+2",
-      answers: {
-        a: "5",
-        b: "6",
-        c: "7"
-      },
-      correctAnswer: "c"
-    },
-    {
-      question: "3-2",
-      answers: {
-        a: "1",
-        b: "5",
-        c: "2"
-      },
-      correctAnswer: "a"
-    },
-    {
-      question: "2+2+2",
-      answers: {
-        a: "4",
-        b: "7",
-        c: "6"
-      },
-      correctAnswer: "c"
-    },
-    {
-      question: "7-4",
-      answers: {
-        a: "1",
-        b: "3",
-        c: "2"
-      },
-      correctAnswer: "b"
-    }
-  ];*/
 
   function buildQuiz() {
     // we'll need a place to store the HTML output
@@ -164,6 +121,16 @@ function showResults() {
     });
         },
         error: function(res) {
+        resultsContainer.innerHTML = `${score} out of ${myQuestions.length}`;
+      previousButton.style.display = "none";
+      submitButton.style.display = "none";
+      $.ajax({
+        url: `/postResult?marks=${score}`,
+        type: 'POST',
+        success: function(res) {
+        console.log("inside ajax");
+        }
+    });
         }
     });
 
