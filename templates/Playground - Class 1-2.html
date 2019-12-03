@@ -1,6 +1,3 @@
-<!-- Author Name: Harmish Ganatra 
-	Modified By: Harmish Ganatra 
--->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -17,8 +14,7 @@
 			font-family: 'Lato', sans-serif;
 			font-size: 300;
 			-webkit-font-smoothing: antialiased;
-			/*background: url('../static/373362.jpg');*/
-			background: url('http://getwallpapers.com/wallpaper/full/e/4/3/373362.jpg');
+			background: url('http://raiingkaeng.com/images/children-wallpaper/38245907-children-wallpaper.jpg');
 			color: white;
 			padding: 0 2em;
 		}
@@ -168,7 +164,7 @@
 
 <span id="textid"></span>
 </div>
-<div draggable="true" class="dragable-item" data-title="Box 1" data-price="0" id="vals">0</div>
+<div draggable="true" class="dragable-item" data-title="Box 0" data-price="0" id="vals">0</div>
 <div draggable="true" class="dragable-item" data-title="Box 1" data-price="1" id="vals">1</div>
 <div draggable="true" class="dragable-item" data-title="Box 2" data-price="2" id="vals">2</div>
 <div draggable="true" class="dragable-item" data-title="Box 3" data-price="3" id="vals">3</div>
@@ -202,53 +198,36 @@ function clickFunction(){
 
 function equalFunction(){
 	var exChildren=$("#output").children();
-	var arr=[];
-	var operand='';
-	for (var i=0; i<exChildren.length; i++){ 
-		
-		if (exChildren[i].innerHTML!='+' && exChildren[i].innerHTML!='-'){
-			arr.push(parseInt(exChildren[i].innerHTML));
-			
-		}
-		else{
-			operand=exChildren[i].innerHTML;
-		}
-
-	}
-	var a1=arr[0];
-	var a2=arr[1];
-	var bool=false;
-	
-	if (operand=='+'){
-
-		var result=a1+a2;
-	}
-	else if (operand=='-'){
-		var result=a1-a2;
-
-	}
+	var ans='';
 
 
-	if(bool)
+
+	for (var i=0; i<exChildren.length; i++)
 	{
-		result2='Reminder:'+result2+' Quotient:'+result1;
-		
-		var html='<div draggable="true" class="dragable-item" data-title="Box 9" data-price="9" id="vals">=</div><div draggable="true" class="dragable-item" data-title="Box 9" data-price="9" id="vals">'+result2+'</div>';		
-		$('#output').append(html);
-
-		/*var html='<div draggable="true" class="dragable-item" data-title="Box 9" data-price="9" id="vals">=</div><div draggable="true" class="dragable-item" data-title="Box 9" data-price="9" id="vals">'+result1+'</div>';		
-	
-		$('#output').append(html);*/
+		ans=ans.concat(exChildren[i].innerHTML); 
 	}
-	else
-	{
+
+	try{
+	result=eval(ans);
+
+	
+	if(exChildren.length>4)
+		result="Problem too complex";
+
+		if(result>20)
+		result="Result too big";
+		
+		var html='<div draggable="true" style="background: green" class="dragable-item" data-title="Box 9" data-price="9" id="vals">=</div><div draggable="true" style="background:white;color:red" class="dragable-item" data-title="Box 9" data-price="9" id="vals">'+result+'</div>';		
+	
+		$('#output').append(html);	
+	}
+		
+	catch{
+		result="Finish the problem";
 		var html='<div draggable="true" style="background: green" class="dragable-item" data-title="Box 9" data-price="9" id="vals">=</div><div draggable="true" style="background:white;color:red" class="dragable-item" data-title="Box 9" data-price="9" id="vals">'+result+'</div>';		
 	
 		$('#output').append(html);
-
 	}
-	//console.log(result)
-	
 }
 
 

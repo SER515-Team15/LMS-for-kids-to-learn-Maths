@@ -1,19 +1,16 @@
-''' Author Name: Sudhanva Hebbale 
-  Modified By: Jubanjan Dhar 
-'''
 from flask import Flask, render_template, request, session, logging, url_for, redirect, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import text
 from functools import wraps
 import random
-
+import datetime
 import json
 
 app = Flask(__name__)
 
 # Change the credentials to fit your localhost details.
-_engine = create_engine("mysql+pymysql://root:sayali@localhost/LoginRegister")
+_engine = create_engine("mysql+pymysql://root:Sudhanva@localhost/LoginRegister")
 db = scoped_session(sessionmaker(bind=_engine))
 
 # Secret Key for secure transaction!
@@ -61,9 +58,13 @@ def login():
         session['email'] = request.form.get("email")
         password = request.form.get("password")
 
+        EmailID = _engine.execute("SELECT Email FROM Users WHERE Email = %s", [email]).fetchone()
+        em = ''.join(EmailID)
+        '''
         emailsql = "SELECT email FROM Users WHERE email = '" + email + "'"
         EmailID = _engine.execute(emailsql).fetchone()
         em = ''.join(EmailID)
+        '''
 
         passwordsql = "SELECT password FROM Users WHERE email = '" + email + "'"
         Passwords = _engine.execute(passwordsql).fetchone()
@@ -79,7 +80,6 @@ def login():
             flash("User does not exist!", "danger")
             return redirect(url_for("login"))
 
-        print(password, Password)
         # If both the fields match, then register
         if password == Password:
             name = _engine.execute("SELECT Name FROM Users WHERE Email = %s", [em]).fetchone()
@@ -107,7 +107,7 @@ def login():
             # If Neither
             elif "0" in status:
                 for row in name:
-                    flash("Welcome Back, " + " " + str(row), "warning")
+                    flash(str(row) + ", " + " \n Your account is currently restricted. Contact admin for more information! ", "warning")
                 return redirect(url_for("free"))
         else:
             flash("Password is incorrect!", "danger")
@@ -218,7 +218,6 @@ def reviewGrades():
         email = session['email']
         name = _engine.execute("SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
         grade = _engine.execute("SELECT * FROM Grades WHERE Email = %s", [email]).fetchall()
-        print(type(name))
         return render_template('reviewGrades.html', grades=grade, user=name)
     else:
         return render_template('login.html')
@@ -236,9 +235,10 @@ def createQuiz():
         session['QuizName'] = name
         Instructors = _engine.execute("SELECT Name FROM Users WHERE Email = %s", [email]).fetchone()
         instructor = ''.join(Instructors)
+        status = "0"
         names = _engine.execute("SELECT Name FROM Quiz WHERE Name = %s", [name]).fetchone()
         if names is None:
-            _engine.execute("INSERT INTO Quiz VALUES (%s, %s, %s, %s)", [name, instructor, Roles, description])
+            _engine.execute("INSERT INTO Quiz VALUES (%s, %s, %s, %s, %s)", [name, instructor, Roles, description, status])
             db.commit()
             return render_template('createQuiz.html')
         else:
@@ -283,9 +283,9 @@ def showQuizzes():
         email = session['email']
         roles = _engine.execute("SELECT Role FROM Users WHERE Email = %s", [email]).fetchone()
         role = ''.join(roles)
-        print(role)
-        quizzes = _engine.execute("SELECT Name, Instructor FROM Quiz WHERE Quiz_Level = %s", [role]).fetchall()
-        return render_template('viewQuizzes.html', quizzes=quizzes)
+        quizzes1 = _engine.execute("SELECT Name, Instructor, Description FROM Quiz WHERE Quiz_Level = %s AND Status = '0'", [role]).fetchall()
+        quizzes2 = _engine.execute("SELECT Name, Instructor, Description FROM Quiz WHERE Quiz_Level = %s AND Status = '1'", [role]).fetchall()
+        return render_template('viewQuizzes.html', quizzes1 =quizzes1, quizzes2 =quizzes2)
     else:
         return render_template('login.html')
 
@@ -303,11 +303,12 @@ def loadQuiz():
 def getQuestions():
     if 'logged in' in session:
         quizname = request.args.get('quizname')
+        session['quizName'] = quizname
         questions = _engine.execute("SELECT ID, Question FROM questions WHERE Quiz_Name = %s", [quizname]).fetchall()
         resp = []
         for i in range(0, len(questions)):
             resp.append({
-                'id':  questions[i][0],
+                'id': questions[i][0],
                 'question': questions[i][1]
             })
         return json.dumps(resp), 200
@@ -321,11 +322,13 @@ def checkAnswers():
         questionName = request.args.get('questionName')
         quizName = request.args.get('quizName')
         answer = request.args.get('ans')
-        questions = _engine.execute("SELECT choice from answer WHERE Quiz_Name = %s AND Question_ID = %s", [quizName, questionName]).fetchall()
+        questions = _engine.execute("SELECT choice from answer WHERE Quiz_Name = %s AND Question_ID = %s",
+                                    [quizName, questionName]).fetchall()
         if questions[0][0] == answer:
             return 'answer correct', 200
         else:
             return 'answer incorrect', 500
+
 
 @app.route("/playground_free")
 def playground_free():
@@ -349,30 +352,28 @@ def free():
 
 @app.route("/free_playground")
 def free_playground():
-    return render_template('Playground - Class 5-8.html')
-
-
-@app.route("/submitQuiz", methods=["GET", "POST"])
-def submitQuiz():
-    r1 = random.randint(0, 10)
-    qID = r1
-    question = request.form.get("Q1")
-    level = session['level']
-    quizName = session['QuizName']
-    _engine.execute("INSERT INTO Questions VALUES (%s, %s, %s, %s)", [qID, question, level, quizName])
-    db.commit()
-    return redirect(url_for("teacher"))
+    return render_template('Playground - Class 1-2.html')
 
 
 @app.route("/postResult", methods=["POST"])
 def postResult():
     score = request.args.get('marks')
     email = session['email']
-    # instructor = session['Instructor']
-    # quiz_name = session['QuizName']
-    print("here "+ email, score)
-    # _engine.execute("INSERT INTO Grades VALUES (%s, %s, %s, %s)", [quiz_name, email, score, instructor])
-    # db.commit()
+    quizNames = session['quizName']
+    instructor = _engine.execute("SELECT Instructor from Quiz WHERE Name = %s", [quizNames]).fetchone()
+    instructors = ''.join(instructor)
+    now = str(datetime.datetime.now())
+    quizzes = _engine.execute("SELECT Quiz_Name from Grades WHERE Quiz_Name = %s", [quizNames]).fetchone()
+
+    if quizzes is None:
+        _engine.execute("INSERT INTO Grades VALUES (%s, %s, %s, %s, %s)", [quizNames, email, score, instructors, now])
+        db.commit()
+    else:
+        _engine.execute("UPDATE Grades SET Score = %s, Last_Taken = %s WHERE Name = %s", [score, now, quizzes])
+        db.commit()
+
+    _engine.execute("UPDATE Quiz SET Status = '1' WHERE Name = %s", [quizNames])
+    db.commit()
     return "Updated the database"
 
 # Run Main in Debug mode
