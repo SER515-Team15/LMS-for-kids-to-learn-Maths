@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!--Page to create a new Quiz with question and choices fields-->
-
 <head>
 
   <meta charset="utf-8">
@@ -12,22 +10,23 @@
 
   <title>SER 515 Project</title>
   <!-- Bootstrap core CSS -->
-  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
 
   <!-- Custom fonts for this template -->
-  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
   <!-- Custom styles for this template -->
-  <link href="static/css/landing-page.min.css" rel="stylesheet">
+  <link href="css/landing-page.min.css" rel="stylesheet">
 
   <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script> 
       
   <script src= "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script> 
       
   <script src= "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> </script>
+
 </head>
 
 <body>
@@ -36,160 +35,39 @@
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
       <a class="navbar-brand" href="#">LeARn</a>
-      <a class="btn btn-primary" href="/logout">Log out</a>
+      <a class="btn btn-primary" href="#">Log out</a>
     </div>
   </nav>
 
-  <!-- Masthead -->
-  <!--<header class="masthead">
-    <section class="showcase">
-      <div class="container-fluid p-0">
-        <div class="row no-gutters">
-          <div class="col-lg-12 text-white showcase-img" style="background-image: url('img/bg-showcase-6.jpg');"></div>
-        </div>
-      </div>
-    </section>
-  </header>-->
-
-  <!-- Form with all the Question Field and choices Field -->
   <section class="features-icons bg-light text-center">
-    <div class="container">
-      <form action="action.php" class="was-validated"> 
+    <div class="container" id="Quiz">
+      <form action="none" class="was-validated"> 
+        <div id="Qspace">
             <div class="form-group"> 
                 <p class="text-left">Question 1</p> 
                 <input type="text" class="form-control" id="Q1"
-                      placeholder="Type text here" name="addmore[]1" required>
+                      placeholder="Type text here" name="Q1" required>
                 <div class="valid-feedback">Valid</div> 
                 <div class="invalid-feedback"> 
                     Please fill this field 
                 </div>
-                <p class="text-left">Choices:</p>
-            </div>
-            <div class="form-group after-add-more form-inline">
-              <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
-                <!--This button will add extra fields for adding more choices this code segment for both questions and choices is repeated throughout the code-->
-                <div class="form-group-btn"> 
-                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> +</button>
-                </div>
-            </div>
-              
-            <div class="form-group"> 
-                <p class="text-left">Question 2</p> 
-                <input type="text" class="form-control" id="Q2"
-                    placeholder="Type text here" name="addmore[]1" required> 
-                <div class="valid-feedback">Valid</div> 
-                <div class="invalid-feedback"> 
+                <div class="form-group form-inline">
+              	<input type="text" id="A1" name="answer1" class="form-control" placeholder="Answer" style="width:500px" required>
+              	<div class="valid-feedback">Valid</div> 
+              	<div class="invalid-feedback"> 
                     Please fill this field 
-                </div> 
+              	</div>
+            	</div>
             </div>
-            <div class="form-group after-add-more form-inline">
-              <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
-                <div class="form-group-btn"> 
-                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> +</button>
-                </div>
-            </div> 
-              
-            <div class="form-group"> 
-                <p class="text-left">Question 3</p> 
-                <input type="text" class="form-control" id="Q3"
-                    placeholder="Type text here" name="addmore[]1" required> 
-                <div class="valid-feedback">Valid</div> 
-                <div class="invalid-feedback"> 
-                    Please fill this field 
-                </div> 
+        </div>
+        <div class="form-group">
+            <div class="form-group-btn"> 
+                <button class="btn btn-success" id="addq" name="addquestion" type="button" onclick="addQuestion()"><i class="glyphicon glyphicon-plus"></i> Question +</button>
             </div>
-            <div class="form-group after-add-more form-inline">
-              <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
-                <div class="form-group-btn"> 
-                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> +</button>
-                </div>
-            </div>
-              
-            <div class="form-group"> 
-                <p class="text-left">Question 4</p> 
-                <input type="text" class="form-control" id="Q4"
-                    placeholder="Type text here" name="addmore[]1" required> 
-                <div class="valid-feedback">Valid</div> 
-                <div class="invalid-feedback"> 
-                    Please fill this field 
-                </div> 
-            </div>
-            <div class="form-group after-add-more form-inline">
-              <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
-                <div class="form-group-btn"> 
-                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> +</button>
-                </div>
-            </div>
-
-            <!--This button will add new fields for the Question and also create a choice field with option to add more choice fields-->
-            <div class="form-group after-add-more1">
-                 <div class="form-group-btn"> 
-                  <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Question +</button>
-                </div>
-            </div>
-              
-            <!--<div class="form-group form-check"> 
-                <label class="form-check-label"> 
-                    <input class="form-check-input" type="checkbox"
-                        name="remember" required> I agree 
-                    <div class="valid-feedback">Valid</div> 
-                    <div class="invalid-feedback"> 
-                        Please check the checkbox 
-                    </div> 
-                </label> 
-            </div>-->
-            <!--submit button to send the questions and answers to the database (Under Development)-->
-            <button type="submit" class="btn bg-success">Submit</button> 
-        </form>
-    </div>
-    <!--This is the code segment that is called to add new choices to existing questions-->
-    <div class="copy" style="display:none">
-      <div class="form-group form-inline">
-        <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
-        <div class="form-group-btn"> 
-          <!--This button will remove one choice field-->
-          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> -</button>
         </div>
-      </div>
-    </div>
-
-    <!--This is the code segment that will add a question as well as a new choice field-->
-    <div class="copy1" style="display:none">
-      <div class="form-group">
-        <p class="text-left">Question#</p>
-        <div class="form-inline">
-        <input type="text" name="addmore[]1" class="form-control" placeholder="Enter text here" style="width:1078px" required>
-        <div class="form-group-btn"> 
-          <!--This button will remove the last Question field added in the page alongwith its choices field-->
-          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> -</button>
-        </div>
-        <div class="valid-feedback">Valid</div> 
-        <div class="invalid-feedback"> Please fill this field </div>
-        </div>
-        <div class="form-group after-add-more form-inline">
-          <input type="text" name="addmore[]" class="form-control" placeholder="Choice#" style="width:500px">
-          <div class="form-group-btn"> 
-            <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> +</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <!--<section class="call-to-action text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <h2 class="mb-4">Ready to get started?</h2>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <button type="submit" class="btn btn-block btn-lg btn-primary">Go To Playground!</button>
-        </div>
-      </div>
-    </div>
-  </section>-->
+        <button type="submit" class="btn bg-success">Submit</button>
+      </form>
+   </section>
 
   <!-- Footer -->
   <footer class="footer bg-light">
@@ -238,24 +116,41 @@
     </div>
   </footer>
 
-  <!--JQuery to add Question and Choice Fields and also to remove them-->
   <script type="text/javascript">
-    $(document).ready(function() {
-      $(".add-more").click(function(){ 
-          var html = $(".copy").html();
-          $(".after-add-more").after(html);
-      });
-      $("body").on("click",".remove",function(){ 
+
+  	var i = 1;
+
+    function addQuestion()
+    {
+    	i++;
+    	var questionadder = document.getElementById("Qspace")
+    	var divnew = document.createElement("div");
+    	divnew.className = 'form-group';
+    	divnew.innerHTML = '<p class="text-left">' + 'Question ' + i +  '</p>' + '<div class="form-inline">' + '<input type="text" id="Q'+i+'"name="Q'+i+'" class="form-control" placeholder="Enter text here" style="width:1078px" required>' + '<div class="form-group-btn">' + '<button class="btn btn-danger remove" type="button">' + '<i class="glyphicon glyphicon-remove">' + '</i>' + '-' + '</button>' + '</div>' + '<div class="valid-feedback">' + 'Valid' + '</div>' + '<div class="invalid-feedback">' +  'Please fill the field' + '</div>' + '</div>' + '<div class="form-group form-inline">' + '<input type="text" id="A1" name="answer1" class="form-control" placeholder="Answer" style="width:500px" required>' + '<div class="valid-feedback">' + 'Valid' + '</div>' + '<div class="invalid-feedback">' +  'Please fill the field' + '</div>' + '</div>';
+    	questionadder.appendChild(divnew)
+    }
+
+    /*function addChoice()
+    {
+    	var choiceadder = document.getElementById("Qspace")
+    	var choicenew = document.createElement("div");
+    	choicenew.className = 'form-group form-inline';
+    	choicenew.innerHTML ='<input type="text" id="C'+i+'" name="choice'+i+'" class="form-control" placeholder="Choice" style="width:500px">' + '<div class="form-group-btn">' + '<button class="btn btn-danger remove" type="button">' + '<i class="glyphicon glyphicon-remove">' + '</i>' + '-' + '</button>';
+    	choiceadder.appendChild(choicenew)
+    }*/
+
+  </script>
+
+  <script type="text/javascript">
+  	
+  	$(document).ready(function(){
+    	$("body").on("click",".remove",function(){ 
           $(this).parents(".form-group").remove();
-      });
-      $(".add-more1").click(function(){ 
-          var html = $(".copy1").html();
-          $(".after-add-more1").after(html);
       });
     });
   </script>
 
-  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
