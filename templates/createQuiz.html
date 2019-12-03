@@ -46,13 +46,14 @@
             <div class="form-group"> 
                 <p class="text-left">Question 1</p> 
                 <input type="text" class="form-control" id="Q1"
-                      placeholder="Type text here" name="Q1" required>
+                      placeholder="Type text here" name="Q1" required onblur="calc()">
+              
                 <div class="valid-feedback">Valid</div> 
                 <div class="invalid-feedback"> 
                     Please fill this field 
                 </div>
                 <div class="form-group form-inline">
-              	<input type="text" id="A1" name="answer1" class="form-control" placeholder="Answer" style="width:500px" required>
+              	<input type="text" id="A1" name="A1" class="form-control" placeholder="Answer" style="width:500px" required>
               	<div class="valid-feedback">Valid</div> 
               	<div class="invalid-feedback"> 
                     Please fill this field 
@@ -126,7 +127,7 @@
     	var questionadder = document.getElementById("Qspace")
     	var divnew = document.createElement("div");
     	divnew.className = 'form-group';
-    	divnew.innerHTML = '<p class="text-left">' + 'Question ' + i +  '</p>' + '<div class="form-inline">' + '<input type="text" id="Q'+i+'"name="Q'+i+'" class="form-control" placeholder="Enter text here" style="width:1078px" required>' + '<div class="form-group-btn">' + '<button class="btn btn-danger remove" type="button">' + '<i class="glyphicon glyphicon-remove">' + '</i>' + '-' + '</button>' + '</div>' + '<div class="valid-feedback">' + 'Valid' + '</div>' + '<div class="invalid-feedback">' +  'Please fill the field' + '</div>' + '</div>' + '<div class="form-group form-inline">' + '<input type="text" id="A1" name="answer1" class="form-control" placeholder="Answer" style="width:500px" required>' + '<div class="valid-feedback">' + 'Valid' + '</div>' + '<div class="invalid-feedback">' +  'Please fill the field' + '</div>' + '</div>';
+    	divnew.innerHTML = '<p class="text-left">' + 'Question ' + i +  '</p>' + '<div class="form-inline">' + '<input type="text" id="Q'+i+'"name="Q'+i+'" class="form-control" placeholder="Enter text here" style="width:1078px" required onblur="calc()">' + '<div class="form-group-btn">' + '<button class="btn btn-danger remove" type="button">' + '<i class="glyphicon glyphicon-remove">' + '</i>' + '-' + '</button>' + '</div>' + '<div class="valid-feedback">' + 'Valid' + '</div>' + '<div class="invalid-feedback">' +  'Please fill the field' + '</div>' + '</div>' + '<div class="form-group form-inline">' + '<input type="text" id="A'+i+'" name="A'+i+'" class="form-control" placeholder="Answer" style="width:500px" required>' + '<div class="valid-feedback">' + 'Valid' + '</div>' + '<div class="invalid-feedback">' +  'Please fill the field' + '</div>' + '</div>';
     	questionadder.appendChild(divnew)
     }
 
@@ -139,6 +140,13 @@
     	choiceadder.appendChild(choicenew)
     }*/
 
+    function calc()
+    {
+    	var x = document.getElementById("Q"+i).value;
+    	var a = eval(x);
+    	document.getElementById("A"+i).value = a;
+    }
+    
   </script>
 
   <script type="text/javascript">
